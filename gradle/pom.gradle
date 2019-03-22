@@ -1,0 +1,29 @@
+def pomConfig = {
+    licenses {
+        license {
+            name "The MIT License"
+            url "https://tldrlegal.com/license/mit-license"
+            distribution "repo"
+        }
+    }
+    developers {
+        developer {
+            id "komputing"
+            name "Komputing"
+            organization "Komputing"
+            organizationUrl "https://komputing.org"
+        }
+    }
+
+    scm {
+        url "https://github.com/Komputing/KBigNumbers.git"
+    }
+}
+
+project.ext.configureMavenCentralMetadata = { pom ->
+    def root = asNode()
+    root.appendNode('name', project.name)
+    root.appendNode('description', 'Kotlin multiplatform porting of Java BigInteger and BigDecimal')
+    root.appendNode('url', 'https://github.com/Komputing/KBigNumbers')
+    root.children().last() + pomConfig
+}

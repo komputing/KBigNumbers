@@ -1,0 +1,9 @@
+rootProject.name = 'kbignumbers'
+enableFeaturePreview('GRADLE_METADATA')
+
+def includeEx(String name) {
+    include name
+    project(name).projectDir = "$rootDir${name.replace(':', '/')}" as File
+}
+
+includeEx ':kbignumbers'
