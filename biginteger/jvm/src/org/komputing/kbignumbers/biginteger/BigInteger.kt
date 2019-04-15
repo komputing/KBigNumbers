@@ -1,7 +1,5 @@
 package org.komputing.kbignumbers.biginteger
 
-import org.komputing.kbignumbers.biginteger.BigInteger
-
 /**
  * Immutable arbitrary-precision integers.  All operations behave as if
  * BigIntegers were represented in two's-complement notation.
