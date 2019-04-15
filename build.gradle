@@ -23,11 +23,20 @@ ext.publishLocal = project.hasProperty("publishLocal")
 def platforms = ["common", "jvm"]
 def projectNeedsPlatform(project, platform) {
     def files = project.projectDir.listFiles()
+    def hasPosix = files.any { it.name == "posix" }
+    def hasDarwin = files.any { it.name == "darwin" }
+
+    if (hasPosix && hasDarwin) return false
+
+    if (hasPosix && platform == "darwin") return false
+    if (hasDarwin && platform == "posix") return false
+    if (!hasPosix && !hasDarwin && platform == "darwin") return false
+
     return files.any { it.name == "common" || it.name == platform }
 }
 
 allprojects {
-    group = "org.komputing"
+    group = "org.komputing.kbignumbers"
     version = configuredVersion
     project.ext.hostManager = new HostManager()
     
@@ -38,6 +47,8 @@ allprojects {
     }
 
     apply plugin: "kotlin-multiplatform"
+    apply from: rootProject.file("gradle/utility.gradle")
+    
     apply plugin: "org.jlleitschuh.gradle.ktlint"
 
     platforms.each { platform ->

@@ -1,88 +1,22 @@
-package kbignumbers.bigdecimal
+package org.komputing.kbignumbers.bigdecimal
 
-import kbignumbers.biginteger.BigInteger
+import org.komputing.kbignumbers.biginteger.BigInteger
 
-/**
- * Immutable arbitrary-precision integers.  All operations behave as if
- * BigDecimals were represented in two's-complement notation.
- * BigDecimal provides analogues to all of Kotlin's
- * primitive integer operators, and all relevant methods from java.lang.Math.
- * Additionally, BigDecimal provides operations for modular arithmetic, GCD
- * calculation, primality testing, prime generation, bit manipulation,
- * and a few other miscellaneous operations.
- *
- * <p>Semantics of arithmetic operations exactly mimic those of Kotlin's integer
- * arithmetic operators, as defined in <i>The Kotlin Language Specification</i>.
- * For example, division by zero throws an {@code ArithmeticException}, and
- * division of a negative by a positive yields a negative (or zero) remainder.
- * All of the details in the Spec concerning overflow are ignored, as
- * BigDecimals are made as large as necessary to accommodate the results of an
- * operation.
- *
- * <p>Semantics of shift operations extend those of Kotlin's shift operators
- * to allow for negative shift distances.  A right-shift with a negative
- * shift distance results in a left shift, and vice-versa.  The unsigned
- * right shift operator ({@code >>>}) is omitted, as this operation makes
- * little sense in combination with the "infinite word size" abstraction
- * provided by this class.
- *
- * <p>Semantics of bitwise logical operations exactly mimic those of Kotlin's
- * bitwise integer operators.  The binary operators ({@code and},
- * {@code or}, {@code xor}) implicitly perform sign extension on the shorter
- * of the two operands prior to performing the operation.
- *
- * <p>Comparison operations perform signed integer comparisons, analogous to
- * those performed by Kotlin's relational and equality operators.
- *
- * <p>Modular arithmetic operations are provided to compute residues, perform
- * exponentiation, and compute multiplicative inverses.  These methods always
- * return a non-negative result, between {@code 0} and {@code (modulus - 1)},
- * inclusive.
- *
- * <p>Bit operations operate on a single bit of the two's-complement
- * representation of their operand.  If necessary, the operand is sign-
- * extended so that it contains the designated bit.  None of the single-bit
- * operations can produce a BigDecimal with a different sign from the
- * BigDecimal being operated on, as they affect only a single bit, and the
- * "infinite word size" abstraction provided by this class ensures that there
- * are infinitely many "virtual sign bits" preceding each BigDecimal.
- *
- * <p>For the sake of brevity and clarity, pseudo-code is used throughout the
- * descriptions of BigDecimal methods.  The pseudo-code expression
- * {@code (i + j)} is shorthand for "a BigDecimal whose value is
- * that of the BigDecimal {@code i} plus that of the BigDecimal {@code j}."
- * The pseudo-code expression {@code (i == j)} is shorthand for
- * "{@code true} if and only if the BigDecimal {@code i} represents the same
- * value as the BigDecimal {@code j}."  Other pseudo-code expressions are
- * interpreted similarly.
- *
- * <p>All methods and constructors in this class throw
- * {@code NullPointerException} when passed
- * a null object reference for any input parameter.
- *
- * BigDecimal must support values in the range
- * -2<sup>{@code Integer.MAX_VALUE}</sup> (exclusive) to
- * +2<sup>{@code Integer.MAX_VALUE}</sup> (exclusive)
- * and may support values outside of that range.
- *
- * The range of probable prime values is limited and may be less than
- * the full supported positive range of {@code BigDecimal}.
- * The range must be at least 1 to 2<sup>500000000</sup>.
- *
- * @implNote
- * BigDecimal constructors and operations throw {@code ArithmeticException} when
- * the result is out of the supported range of
- * -2<sup>{@code Integer.MAX_VALUE}</sup> (exclusive) to
- * +2<sup>{@code Integer.MAX_VALUE}</sup> (exclusive).
- */
-actual class BigDecimal(val value: java.math.BigDecimal) : Number(), Comparable<BigDecimal> {
+expect class BigDecimal : Number, Comparable<BigDecimal> {
 
     /**
      * Translates the decimal String representation of a BigDecimal into a BigDecimal.
      */
-    actual constructor(value: String) : this(java.math.BigDecimal(value))
+    constructor(value: String)
 
-    actual constructor(value: BigInteger) : this(java.math.BigDecimal(value.value))
+    /**
+     * Translates a {@code BigInteger} into a {@code BigDecimal}.
+     * The scale of the {@code BigDecimal} is zero.
+     *
+     * @param value {@code BigInteger} value to be converted to
+     *              {@code BigDecimal}.
+     */
+    constructor(value: BigInteger)
 
     /**
      * Returns a BigDecimal whose value is {@code (this + value)}.
@@ -90,9 +24,7 @@ actual class BigDecimal(val value: java.math.BigDecimal) : Number(), Comparable<
      * @param `value` value to be added to this BigDecimal.
      * @return {@code this + value}
      */
-    actual fun add(value: BigDecimal): BigDecimal {
-        return BigDecimal(this.value.add(value.value))
-    }
+    fun add(value: BigDecimal): BigDecimal
 
     /**
      * Returns a BigDecimal whose value is {@code (this - val)}.
@@ -100,9 +32,7 @@ actual class BigDecimal(val value: java.math.BigDecimal) : Number(), Comparable<
      * @param value value to be subtracted from this BigDecimal.
      * @return {@code this - val}
      */
-    actual fun subtract(value: BigDecimal): BigDecimal {
-        return BigDecimal(this.value.subtract(value.value))
-    }
+    fun subtract(value: BigDecimal): BigDecimal
 
     /**
      * Returns a BigDecimal whose value is {@code (this * val)}.
@@ -110,9 +40,7 @@ actual class BigDecimal(val value: java.math.BigDecimal) : Number(), Comparable<
      * @param value value to be multiplied by this BigDecimal.
      * @return {@code this * val}
      */
-    actual fun multiply(value: BigDecimal): BigDecimal {
-        return BigDecimal(this.value.multiply(value.value))
-    }
+    fun multiply(value: BigDecimal): BigDecimal
 
     /**
      * Returns a {@code BigDecimal} whose value is {@code (this /
@@ -125,9 +53,7 @@ actual class BigDecimal(val value: java.math.BigDecimal) : Number(), Comparable<
      * @throws ArithmeticException if the exact quotient does not have a
      *         terminating decimal expansion
      */
-    actual fun divide(value: BigDecimal): BigDecimal {
-        return BigDecimal(this.value.divide(value.value))
-    }
+    fun divide(value: BigDecimal): BigDecimal
 
     /**
      * Returns a BigDecimal whose value is {@code (this % val)}.
@@ -137,9 +63,7 @@ actual class BigDecimal(val value: java.math.BigDecimal) : Number(), Comparable<
      * @return {@code this % val}
      * @throws ArithmeticException if {@code val} is zero.
      */
-    actual fun remainder(value: BigDecimal): BigDecimal {
-        return BigDecimal(this.value.remainder(value.value))
-    }
+    fun remainder(value: BigDecimal): BigDecimal
 
     /**
      * Returns the signum function of this BigDecimal.
@@ -147,9 +71,7 @@ actual class BigDecimal(val value: java.math.BigDecimal) : Number(), Comparable<
      * @return -1, 0 or 1 as the value of this BigDecimal is negative, zero or
      *         positive.
      */
-    actual fun signum(): Int {
-        return this.value.signum()
-    }
+    fun signum(): Int
 
     /**
      * Returns the string representation of this {@code BigDecimal},
@@ -248,9 +170,7 @@ actual class BigDecimal(val value: java.math.BigDecimal) : Number(), Comparable<
      *
      * @return string representation of this {@code BigDecimal}.
      */
-    actual override fun toString(): String {
-        return this.value.toString()
-    }
+    override fun toString(): String
 
     /**
      * Converts this {@code BigDecimal} to a {@code byte}, checking
@@ -262,52 +182,12 @@ actual class BigDecimal(val value: java.math.BigDecimal) : Number(), Comparable<
      * @throws ArithmeticException if the value of {@code this} will
      * not exactly fit in a {@code byte}.
      */
-    actual fun byteValueExact(): Byte {
-        return this.value.byteValueExact()
-    }
+    fun byteValueExact(): Byte
 
-    override fun toByte(): Byte {
-        return this.value.toByte()
-    }
-
-    override fun toChar(): Char {
-        return this.value.toChar()
-    }
-
-    override fun toDouble(): Double {
-        return this.value.toDouble()
-    }
-
-    override fun toFloat(): Float {
-        return this.value.toFloat()
-    }
-
-    override fun toInt(): Int {
-        return this.value.toInt()
-    }
-
-    override fun toLong(): Long {
-        return this.value.toLong()
-    }
-
-    override fun toShort(): Short {
-        return this.value.toShort()
-    }
-
-    override fun equals(other: Any?): Boolean {
-        return other is BigDecimal && this.value == other.value
-    }
-
-    override fun compareTo(other: BigDecimal): Int {
-        return value.compareTo(other.value)
-    }
-
-    actual companion object {
-        actual val ZERO: BigDecimal = BigDecimal(java.math.BigDecimal.ZERO)
-        actual val ONE: BigDecimal = BigDecimal(java.math.BigDecimal.ONE)
-        actual val TEN: BigDecimal = BigDecimal(java.math.BigDecimal.TEN)
-        actual fun valueOf(value: Long): BigDecimal {
-            return BigDecimal(java.math.BigDecimal.valueOf(value))
-        }
+    companion object {
+        val ZERO: BigDecimal
+        val ONE: BigDecimal
+        val TEN: BigDecimal
+        fun valueOf(value: Long): BigDecimal
     }
 }
