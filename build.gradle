@@ -36,7 +36,7 @@ def projectNeedsPlatform(project, platform) {
 }
 
 allprojects {
-    group = "org.komputing.kbignumbers"
+    group = "com.github.komputing.kbignumbers"
     version = configuredVersion
     project.ext.hostManager = new HostManager()
     
