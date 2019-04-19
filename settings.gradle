@@ -6,4 +6,5 @@ def includeEx(String name) {
     project(name).projectDir = "$rootDir${name.replace(':', '/')}" as File
 }
 
-includeEx ':kbignumbers'
+includeEx ':bigdecimal'
+includeEx ':biginteger'

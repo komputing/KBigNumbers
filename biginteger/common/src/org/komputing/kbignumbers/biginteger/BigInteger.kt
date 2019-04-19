@@ -1,4 +1,4 @@
-package kbignumbers.biginteger
+package org.komputing.kbignumbers.biginteger
 
 /**
  * Immutable arbitrary-precision integers.  All operations behave as if
@@ -73,22 +73,22 @@ package kbignumbers.biginteger
  * -2<sup>{@code Integer.MAX_VALUE}</sup> (exclusive) to
  * +2<sup>{@code Integer.MAX_VALUE}</sup> (exclusive).
  */
-actual class BigInteger(val value: java.math.BigInteger) : Number(), Comparable<kbignumbers.biginteger.BigInteger> {
+expect class BigInteger : Number, Comparable<BigInteger> {
 
     /**
      * Translates the sign-magnitude representation of a BigInteger into a BigInteger.
      */
-    actual constructor(signum: Int, magnitude: ByteArray) : this(java.math.BigInteger(signum, magnitude))
+    constructor(signum: Int, magnitude: ByteArray)
 
     /**
      * Translates the decimal String representation of a BigInteger into a BigInteger.
      */
-    actual constructor(value: String) : this(java.math.BigInteger(value))
+    constructor(value: String)
 
     /**
      * Translates the String representation of a BigInteger in the specified radix into a BigInteger.
      */
-    actual constructor(value: String, radix: Int) : this(java.math.BigInteger(value, radix))
+    constructor(value: String, radix: Int)
 
     /**
      * Returns a BigInteger whose value is {@code (this + value)}.
@@ -96,9 +96,7 @@ actual class BigInteger(val value: java.math.BigInteger) : Number(), Comparable<
      * @param `value` value to be added to this BigInteger.
      * @return {@code this + value}
      */
-    actual fun add(value: BigInteger): BigInteger {
-        return BigInteger(this.value.add(value.value))
-    }
+    fun add(value: BigInteger): BigInteger
 
     /**
      * Returns a BigInteger whose value is {@code (this - val)}.
@@ -106,9 +104,7 @@ actual class BigInteger(val value: java.math.BigInteger) : Number(), Comparable<
      * @param value value to be subtracted from this BigInteger.
      * @return {@code this - val}
      */
-    actual fun subtract(value: BigInteger): BigInteger {
-        return BigInteger(this.value.subtract(value.value))
-    }
+    fun subtract(value: BigInteger): BigInteger
 
     /**
      * Returns a BigInteger whose value is {@code (this * val)}.
@@ -116,9 +112,7 @@ actual class BigInteger(val value: java.math.BigInteger) : Number(), Comparable<
      * @param value value to be multiplied by this BigInteger.
      * @return {@code this * val}
      */
-    actual fun multiply(value: BigInteger): BigInteger {
-        return BigInteger(this.value.multiply(value.value))
-    }
+    fun multiply(value: BigInteger): BigInteger
 
     /**
      * Returns a BigInteger whose value is {@code (this / val)}.
@@ -127,9 +121,7 @@ actual class BigInteger(val value: java.math.BigInteger) : Number(), Comparable<
      * @return {@code this / val}
      * @throws ArithmeticException if {@code val} is zero.
      */
-    actual fun divide(value: BigInteger): BigInteger {
-        return BigInteger(this.value.divide(value.value))
-    }
+    fun divide(value: BigInteger): BigInteger
 
     /**
      * Returns a BigInteger whose value is {@code (this mod m}).  This method
@@ -141,9 +133,7 @@ actual class BigInteger(val value: java.math.BigInteger) : Number(), Comparable<
      * @throws ArithmeticException {@code m} &le; 0
      * @see remainder
      */
-    actual fun mod(m: BigInteger): BigInteger {
-        return BigInteger(this.value.mod(m.value))
-    }
+    fun mod(m: BigInteger): BigInteger
 
     /**
      * Returns a BigInteger whose value is {@code (this % val)}.
@@ -153,9 +143,7 @@ actual class BigInteger(val value: java.math.BigInteger) : Number(), Comparable<
      * @return {@code this % val}
      * @throws ArithmeticException if {@code val} is zero.
      */
-    actual fun remainder(value: BigInteger): BigInteger {
-        return BigInteger(this.value.remainder(value.value))
-    }
+    fun remainder(value: BigInteger): BigInteger
 
     /**
      * Returns a BigInteger whose value is {@code (this ^ val)}.  (This method
@@ -165,9 +153,7 @@ actual class BigInteger(val value: java.math.BigInteger) : Number(), Comparable<
      * @param value value to be XOR'ed with this BigInteger.
      * @return {@code this ^ val}
      */
-    actual fun xor(value: BigInteger): BigInteger {
-        return BigInteger(this.value.xor(value.value))
-    }
+    fun xor(value: BigInteger): BigInteger
 
     /**
      * Returns a BigInteger whose value is {@code (this & val)}.  (This
@@ -177,9 +163,7 @@ actual class BigInteger(val value: java.math.BigInteger) : Number(), Comparable<
      * @param value value to be AND'ed with this BigInteger.
      * @return {@code this & val}
      */
-    actual fun and(value: BigInteger): BigInteger {
-        return BigInteger(this.value.and(value.value))
-    }
+    fun and(value: BigInteger): BigInteger
 
     /**
      * Returns a BigInteger whose value is {@code (this << n)}.
@@ -191,9 +175,7 @@ actual class BigInteger(val value: java.math.BigInteger) : Number(), Comparable<
      * @return {@code this << n}
      * @see shiftRight
      */
-    actual fun shiftLeft(n: Int): BigInteger {
-        return BigInteger(this.value.shiftLeft(n))
-    }
+    fun shiftLeft(n: Int): BigInteger
 
     /**
      * Returns a BigInteger whose value is {@code (this >> n)}.  Sign
@@ -205,9 +187,7 @@ actual class BigInteger(val value: java.math.BigInteger) : Number(), Comparable<
      * @return {@code this >> n}
      * @see shiftLeft
      */
-    actual fun shiftRight(n: Int): BigInteger {
-        return BigInteger(this.value.shiftRight(n))
-    }
+    fun shiftRight(n: Int): BigInteger
 
     /**
      * Returns the signum function of this BigInteger.
@@ -215,9 +195,7 @@ actual class BigInteger(val value: java.math.BigInteger) : Number(), Comparable<
      * @return -1, 0 or 1 as the value of this BigInteger is negative, zero or
      *         positive.
      */
-    actual fun signum(): Int {
-        return this.value.signum()
-    }
+    fun signum(): Int
 
     /**
      * Returns the decimal String representation of this BigInteger.
@@ -228,9 +206,7 @@ actual class BigInteger(val value: java.math.BigInteger) : Number(), Comparable<
      *
      * @return decimal String representation of this BigInteger.
      */
-    actual fun toString(radix: Int): String {
-        return this.value.toString(radix)
-    }
+    fun toString(radix: Int): String
 
     /**
      * Returns a byte array containing the two's-complement
@@ -246,9 +222,7 @@ actual class BigInteger(val value: java.math.BigInteger) : Number(), Comparable<
      *         this BigInteger.
      * @see #BigInteger(byte[])
      */
-    actual fun toByteArray(): ByteArray {
-        return this.value.toByteArray()
-    }
+    fun toByteArray(): ByteArray
 
     /**
      * Converts this {@code BigInteger} to a {@code byte}, checking
@@ -260,52 +234,12 @@ actual class BigInteger(val value: java.math.BigInteger) : Number(), Comparable<
      * @throws ArithmeticException if the value of {@code this} will
      * not exactly fit in a {@code byte}.
      */
-    actual fun byteValueExact(): Byte {
-        return this.value.byteValueExact()
-    }
+    fun byteValueExact(): Byte
 
-    override fun toByte(): Byte {
-        return this.value.toByte()
-    }
-
-    override fun toChar(): Char {
-        return this.value.toChar()
-    }
-
-    override fun toDouble(): Double {
-        return this.value.toDouble()
-    }
-
-    override fun toFloat(): Float {
-        return this.value.toFloat()
-    }
-
-    override fun toInt(): Int {
-        return this.value.toInt()
-    }
-
-    override fun toLong(): Long {
-        return this.value.toLong()
-    }
-
-    override fun toShort(): Short {
-        return this.value.toShort()
-    }
-
-    override fun equals(other: Any?): Boolean {
-        return other is BigInteger && this.value == other.value
-    }
-
-    override fun compareTo(other: BigInteger): Int {
-        return value.compareTo(other.value)
-    }
-
-    actual companion object {
-        actual val ZERO: BigInteger = BigInteger(java.math.BigInteger.ZERO)
-        actual val ONE: BigInteger = BigInteger(java.math.BigInteger.ONE)
-        actual val TEN: BigInteger = BigInteger(java.math.BigInteger.TEN)
-        actual fun valueOf(value: Long): BigInteger {
-            return BigInteger(java.math.BigInteger.valueOf(value))
-        }
+    companion object {
+        val ZERO: BigInteger
+        val ONE: BigInteger
+        val TEN: BigInteger
+        fun valueOf(value: Long): BigInteger
     }
 }

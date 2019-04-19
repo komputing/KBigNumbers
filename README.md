@@ -5,24 +5,53 @@
 [BigDecimal](https://docs.oracle.com/javase/7/docs/api/java/math/BigDecimal.html).
 
 Currently this library is only compatible with `common` and `jvm` modules.  
-Any PR implementing more platforms are more than welcome. 
+Any PR implementing is platforms are more than welcome. 
 
-## Usage
-Don't forget to declare a variable named `kbignumbers_version` equals to the latest version.   
+## Packages
+The project is split into two different packages: `biginteger` and `bigdecimal` (which depends on `biginteger`).
 
-### Common
+The library is available on Jitpack. In order to get it, you have to do as follows.
+
+**1.** Add the Jitpack repository to your project `build.gradle` file. 
 ```groovy
-dependencies {
-    implementation "org.komputing:kbignumbers:$kbignumbers_version"
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
 }
 ```
 
-### Jvm
+**2.** Add the dependency you prefer. All the dependencies can be used as follows
 ```groovy
 dependencies {
-    implementation "org.komputing:kbignumbers-jvm:$kbignumbers_version"
+    "com.github.komputing.kbignumbers:{module}-{platform}:{version}"
 }
-``` 
+```
+
+Examples:
+```groovy
+dependencies {
+    "com.github.komputing.kbignumbers:biginteger-common:1.0.0-RC1"
+    "com.github.komputing.kbignumbers:bigdecimal-jvm:1.0.0-RC1"
+}
+```
+
+### Available modules
+| Module | Description |
+| :----- | :---------- |
+| `biginteger` | Contains the `BigInteger` class definition | 
+| `bigdecimal` | Contains the `BigDecimal class definition | 
+
+
+### Available platforms 
+| Platform | Description | 
+| :------- | :---------- |
+| `common` | Kotlin multiplatform | 
+| `jvm` | JVM-based platform |
+
+### Latest version
+The latest version is [![](https://jitpack.io/v/komputing/KBigNumbers.svg)](https://jitpack.io/#komputing/KBigNumbers)
 
 ## Current status 
 ### BigInteger
